@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="CE-3.5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+    <flow name="appFlowFlow1" doc:name="appFlowFlow1">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="getplaylist" mimeType="application/json" doc:name="HTTP"/>
+        <http:outbound-endpoint exchange-pattern="request-response" host="api.soundcloud.com" port="80" path="playlists/21784256.xml?client_id=d70d240eb985940f26cef88ba834c156" method="GET" mimeType="application/json" contentType="application/json" doc:name="HTTP"/>
+        <file:outbound-endpoint path="/Users/azven224/Documents/sc/esb/soundcloudapp/flows" outputPattern="playlistInfo.xml" responseTimeout="10000" doc:name="File"/>
+        <component class="edu.ucdavis.iet.PlaylistSyncManager" doc:name="Java"/>
+       <!--  <foreach doc:name="For Each">
+            <http:outbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" method="GET" doc:name="HTTP"/>
+        </foreach> -->
+    </flow>
+</mule>
