@@ -31,7 +31,7 @@ public class PlaylistSyncManagerTest
 		// Create a list of textfiles of playlists to process
 		ArrayList<FileInputStream> xmlFiles = new ArrayList<FileInputStream>();
 		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml"));
-		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml"));
+		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml")); // Empty playlist
 		int fileNum = 0; // Keeps track of file # while iterating playlists
 		
 		for (int i = 0; i < xmlFiles.size(); i++) 
@@ -39,7 +39,6 @@ public class PlaylistSyncManagerTest
 			fileNum++;
 			System.out.print("START OF FILE #" + fileNum + "\n");
 			
-			//FileInputStream xmlFile = new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml");
 		    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
 		    Document xmlDocument = builder.parse(xmlFiles.get(i));
