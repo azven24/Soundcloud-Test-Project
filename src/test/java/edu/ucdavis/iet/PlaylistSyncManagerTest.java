@@ -46,6 +46,9 @@ public class PlaylistSyncManagerTest {
 		NodeList trackList = (NodeList) xPath.compile(downloadableTrack).evaluate(xmlDocument, XPathConstants.NODESET);
 		NodeList urlList = (NodeList) xPath.compile(downloadURL).evaluate(xmlDocument, XPathConstants.NODESET);
 		
+		// i made a change here
+		
+		
 		writetoJSONFile(trackList, urlList);
 		
 		// Testing valid input: both must be NodeLists
