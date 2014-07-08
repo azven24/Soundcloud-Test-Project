@@ -28,29 +28,46 @@ public class PlaylistSyncManagerTest
 	@Test
 	public void testWritetoJSONFile() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException 
 	{
-		FileInputStream xmlFile = new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml");
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = builderFactory.newDocumentBuilder();
-		Document xmlDocument = builder.parse(xmlFile);
-		XPath xPath = XPathFactory.newInstance().newXPath();
+		// Create a list of textfiles of playlists to process
+		ArrayList<FileInputStream> xmlFiles = new ArrayList<FileInputStream>();
+		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml"));
+		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml"));
+		int fileNum = 0; // Keeps track of file # while iterating playlists
 		
-		String downloadableTrack = "/playlist/tracks/track[downloadable = 'true']/title";
-		String downloadURL = "/playlist/tracks/track[downloadable = 'true']/download-url";
-		NodeList trackList = (NodeList) xPath.compile(downloadableTrack).evaluate(xmlDocument, XPathConstants.NODESET);
-		NodeList urlList = (NodeList) xPath.compile(downloadURL).evaluate(xmlDocument, XPathConstants.NODESET);
+		for (int i = 0; i < xmlFiles.size(); i++) 
+		{
+			fileNum++;
+			System.out.print("START OF FILE #" + fileNum + "\n");
+			
+			//FileInputStream xmlFile = new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml");
+		    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
+		    Document xmlDocument = builder.parse(xmlFiles.get(i));
+		    XPath xPath = XPathFactory.newInstance().newXPath();
 		
-		// Testing function's arguments
-		psm.writetoJSONFile(trackList, urlList);
+		    String downloadableTrack = "/playlist/tracks/track[downloadable = 'true']/title";
+		    String downloadURL = "/playlist/tracks/track[downloadable = 'true']/download-url";
+		    NodeList trackList = (NodeList) xPath.compile(downloadableTrack).evaluate(xmlDocument, XPathConstants.NODESET);
+		    NodeList urlList = (NodeList) xPath.compile(downloadURL).evaluate(xmlDocument, XPathConstants.NODESET);
 		
-		// Testing valid input: both must be NodeLists
-		assertTrue(trackList instanceof NodeList);
-		assertTrue(urlList instanceof NodeList);
+		    // Testing function's arguments
+		    psm.writetoJSONFile(trackList, urlList);
+					
+		    // Testing valid input: both must be NodeLists
+		    assertTrue(trackList instanceof NodeList);
+		    assertTrue(urlList instanceof NodeList);
 		
-		// Testing valid input: both must be non-empty
-		assertNotNull(trackList);
-		assertNotNull(urlList);
+		    // Testing valid input: both must be non-empty
+		    assertNotNull(trackList);
+		    assertNotNull(urlList);
 		
-		// Testing invalid input: if one of the URL's is invalid
+		    // Testing invalid input: if one of the URL's is invalid
 		
+	
+		    for (int j = 0; j < trackList.getLength(); j++)
+		    	System.out.println("Track title: " + trackList.item(j).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(j).getFirstChild().getNodeValue() + "\n");
+		
+		    System.out.println("END OF FILE #" + fileNum + "\n");
+		}
 	}
 }
