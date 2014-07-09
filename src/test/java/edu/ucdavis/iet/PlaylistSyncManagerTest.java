@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -26,13 +28,13 @@ public class PlaylistSyncManagerTest
 	PlaylistSyncManager psm = new PlaylistSyncManager();
 	
 	@Test
-	public void testWritetoJSONFile() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException 
+	public void testWritetoJSONFile() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, MalformedURLException
 	{
-		// Create a list of textfiles of playlists to process
+		// Create a list of text files of playlists to process
 		ArrayList<FileInputStream> xmlFiles = new ArrayList<FileInputStream>();
 		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml"));
-		//xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml")); // Empty playlist, test will fail on this
 		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/chillStuffPlaylist.xml"));
+		//xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml")); // Empty playlist, test will fail on this
 		int fileNum = 0; // Keeps track of file # while iterating playlists
 		
 		for (int i = 0; i < xmlFiles.size(); i++) 
@@ -40,6 +42,7 @@ public class PlaylistSyncManagerTest
 			fileNum++;
 			System.out.print("START OF FILE #" + fileNum + "\n");
 			
+			// Create playlist file
 		    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
 		    Document xmlDocument = builder.parse(xmlFiles.get(i));
@@ -53,30 +56,32 @@ public class PlaylistSyncManagerTest
 		    // Testing function's arguments
 		    psm.writetoJSONFile(trackList, urlList);
 					
-		    // Testing valid input: both must be NodeLists
+		    // Both input arguments must be NodeLists
 		    assertTrue(trackList instanceof NodeList);
 		    assertTrue(urlList instanceof NodeList);
 		
-		    // Testing valid input: both must be non-empty 
+		    // Lists cannot be null and must be non-empty
 		    assertNotNull(trackList);
 		    assertNotNull(urlList);
+		    assertTrue(trackList.getLength() > 0);
+		    assertTrue(urlList.getLength() > 0);
 		    
+		    // Printing # of elements in lists and the tracks within each playlist. For debugging purposes
 		    System.out.println("# elements in trackList: " + trackList.getLength());
 		    System.out.println("# elements in urlList: " + urlList.getLength());
 		    for (int j = 0; j < trackList.getLength(); j++)
 		    	System.out.println("Track title: " + trackList.item(j).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(j).getFirstChild().getNodeValue() + "\n");
-		    
-		    assertTrue(trackList.getLength() > 0);
-		     
-		
-		    // Testing invalid input: if one of the URL's is invalid
-		
-	
-		    
-		
+		    		
+		    // Validating correct URL
+		    // Iterate list and create an object for every URL. If the URL is an invalid type, a MalformedURLException will be thrown
+		    for (int k = 0; k < urlList.getLength(); k++)
+		    {
+		    	String trackURL = urlList.item(k).getFirstChild().getNodeValue();
+	    		URL url = new URL(trackURL);	    	
+		    }
+				    	
 		    System.out.println("END OF FILE #" + fileNum + "\n");
 		    xmlFiles.get(i).close();
-		    
-		}
-	}
-}
+		} 
+	} 
+} 

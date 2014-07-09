@@ -63,8 +63,8 @@ public class PlaylistSyncManager implements Callable
 		NodeList urlList = (NodeList) xPath.compile(downloadURL).evaluate(xmlDocument, XPathConstants.NODESET); 	
 		System.out.println("\n");
 		
-		for (int i = 0; i < trackList.getLength(); i++)
-			System.out.println("Track title: " + trackList.item(i).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(i).getFirstChild().getNodeValue() + "\n");  
+		/*for (int i = 0; i < trackList.getLength(); i++)
+			System.out.println("Track title: " + trackList.item(i).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(i).getFirstChild().getNodeValue() + "\n"); */
 
 		writetoJSONFile(trackList, urlList);
 	}
