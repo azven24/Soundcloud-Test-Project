@@ -49,7 +49,8 @@ public class PlaylistSyncManager implements Callable
 	public void parseXMLconvertJSON() throws SAXException, IOException, XPathExpressionException, ParserConfigurationException
 	{
 		// Build DOM XML Parser
-		FileInputStream xmlFile = new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml");
+		//FileInputStream xmlFile = new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml");
+		FileInputStream xmlFile = new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/chillStuffPlaylist.xml");
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = builderFactory.newDocumentBuilder();
 		Document xmlDocument = builder.parse(xmlFile);
@@ -59,11 +60,11 @@ public class PlaylistSyncManager implements Callable
 		String downloadableTrack = "/playlist/tracks/track[downloadable = 'true']/title";
 		String downloadURL = "/playlist/tracks/track[downloadable = 'true']/download-url";
 		NodeList trackList = (NodeList) xPath.compile(downloadableTrack).evaluate(xmlDocument, XPathConstants.NODESET);
-		NodeList urlList = (NodeList) xPath.compile(downloadURL).evaluate(xmlDocument, XPathConstants.NODESET);
+		NodeList urlList = (NodeList) xPath.compile(downloadURL).evaluate(xmlDocument, XPathConstants.NODESET); 	
 		System.out.println("\n");
-
+		
 		for (int i = 0; i < trackList.getLength(); i++)
-			System.out.println("Track title: " + trackList.item(i).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(i).getFirstChild().getNodeValue() + "\n");
+			System.out.println("Track title: " + trackList.item(i).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(i).getFirstChild().getNodeValue() + "\n");  
 
 		writetoJSONFile(trackList, urlList);
 	}

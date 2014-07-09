@@ -6,8 +6,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
     <flow name="appFlowFlow1" doc:name="appFlowFlow1">
         <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="getplaylist" mimeType="application/json" doc:name="HTTP"/>
-        <http:outbound-endpoint exchange-pattern="request-response" host="api.soundcloud.com" port="80" path="playlists/21784256.xml?client_id=d70d240eb985940f26cef88ba834c156" method="GET" mimeType="application/json" contentType="application/json" doc:name="HTTP"/>
-        <file:outbound-endpoint path="/Users/azven224/Documents/sc/esb/soundcloudapp/flows" outputPattern="playlistInfo.xml" responseTimeout="10000" doc:name="File"/>
+        <http:outbound-endpoint exchange-pattern="request-response" host="api.soundcloud.com" port="80" path="playlists/15931423.xml?client_id=d70d240eb985940f26cef88ba834c156" method="GET" mimeType="application/json" contentType="application/json" doc:name="HTTP"/>
+        <file:outbound-endpoint path="/Users/azven224/Documents/sc/esb/soundcloudapp/flows" outputPattern="chillStuffPlaylist.xml" responseTimeout="10000" doc:name="File"/>
         <component class="edu.ucdavis.iet.PlaylistSyncManager" doc:name="Java"/>
        <!--  <foreach doc:name="For Each">
             <http:outbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" method="GET" doc:name="HTTP"/>

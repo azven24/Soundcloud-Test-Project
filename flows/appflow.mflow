@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="appFlow">
-    <flow SubFlow="false" name="appFlowFlow1" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="6adaa0c0-c21b-4823-91ce-a9d4f5eb36c3">
+    <flow SubFlow="false" name="appFlowFlow1" type="http://www.mulesoft.org/schema/mule/core/flow" entity-id="92d32262-0a8f-4a95-84e7-60320bb7c13f">
         <properties>
             <property name="initialState"/>
             <property name="processingStrategy2"/>
@@ -39,74 +39,65 @@
                     <property name="auxiliary;index" value="2"/>
                     <property name="connector-ref"/>
                 </properties>
+                <description></description>
             </endpoint>
             <endpoint direction="Outbound" name="HTTP" type="http://www.mulesoft.org/schema/mule/http/endpoint" entity-id="HTTP#2">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
                     <property name="port" value="80"/>
                     <property name="host" value="api.soundcloud.com"/>
-                    <property name="businessEventsLabel"/>
-                    <property name="followRedirects"/>
+                    <property name="followRedirects" value="false"/>
                     <property name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute" value="http://www.mulesoft.org/schema/mule/http/endpoint"/>
-                    <property name="keepAlive"/>
+                    <property name="keepAlive" value="false"/>
                     <property name="contentType" value="application/json"/>
-                    <property name="disableTransportTransformer"/>
-                    <property name="password"/>
+                    <property name="disableTransportTransformer" value="false"/>
+                    <property name="password" value=""/>
                     <property name="exchange-pattern" value="request-response"/>
-                    <property name="tracking:enable-default-events"/>
-                    <property name="ref"/>
-                    <property name="httpLabel"/>
-                    <property name="transformer-refs"/>
-                    <property name="address"/>
-                    <property name="encoding"/>
-                    <property name="path" value="playlists/21784256.xml?client_id=d70d240eb985940f26cef88ba834c156"/>
-                    <property name="responseTransformer-refs"/>
+                    <property name="ref" value=""/>
+                    <property name="transformer-refs" value=""/>
+                    <property name="httpLabel" value=""/>
+                    <property name="updated"/>
+                    <property name="address" value=""/>
+                    <property name="auxiliary;erased;encoding" value="true"/>
+                    <property name="encoding" value=""/>
+                    <property name="path" value="playlists/15931423.xml?client_id=d70d240eb985940f26cef88ba834c156"/>
+                    <property name="responseTransformer-refs" value=""/>
                     <property name="method" value="GET"/>
-                    <property name="user"/>
-                    <property name="mimeType" value="application/json"/>
-                    <property name="responseTimeout"/>
+                    <property name="user" value=""/>
                     <property name="auxiliary;index" value="3"/>
-                    <property name="connector-ref"/>
+                    <property name="responseTimeout" value="10000"/>
+                    <property name="mimeType" value="application/json"/>
+                    <property name="connector-ref" value=""/>
                 </properties>
                 <description></description>
             </endpoint>
             <endpoint direction="Outbound" name="File" type="http://www.mulesoft.org/schema/mule/file/endpoint" entity-id="File#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property name="reverseOrder"/>
-                    <property name="moveToPattern"/>
-                    <property name="pollingFrequency"/>
-                    <property name="businessEventsLabel"/>
-                    <property name="comparator"/>
-                    <property name="disableTransportTransformer"/>
+                    <property name="auxiliary;erased;mimeType" value="true"/>
+                    <property name="disableTransportTransformer" value="false"/>
                     <property name="exchange-pattern" value="one-way"/>
-                    <property name="tracking:enable-default-events"/>
-                    <property name="ref"/>
-                    <property name="transformer-refs"/>
-                    <property name="moveToDirectory"/>
-                    <property name="address"/>
-                    <property name="fileAge"/>
-                    <property name="encoding"/>
+                    <property name="ref" value=""/>
+                    <property name="transformer-refs" value=""/>
+                    <property name="updated"/>
+                    <property name="address" value=""/>
+                    <property name="auxiliary;erased;encoding" value="true"/>
                     <property name="path" value="/Users/azven224/Documents/sc/esb/soundcloudapp/flows"/>
-                    <property name="outputPattern" value="playlistInfo.xml"/>
-                    <property name="responseTimeout" value="10000"/>
-                    <property name="mimeType"/>
+                    <property name="encoding" value=""/>
+                    <property name="outputPattern" value="chillStuffPlaylist.xml"/>
+                    <property name="mimeType" value=""/>
                     <property name="auxiliary;index" value="4"/>
-                    <property name="connector-ref"/>
+                    <property name="responseTimeout" value="10000"/>
+                    <property name="connector-ref" value=""/>
                 </properties>
                 <description></description>
             </endpoint>
             <pattern name="Java" type="http://www.mulesoft.org/schema/mule/core/component" entity-id="Java#1">
                 <graphicalData x="0" y="0" width="0" height="0"/>
                 <properties>
-                    <property name="updated"/>
                     <property name="class" value="edu.ucdavis.iet.PlaylistSyncManager"/>
                     <property name="auxiliary;index" value="5"/>
-                    <property-collection name="@http://www.mulesoft.org/schema/mule/core/refInterceptorStackType;611035647">
-                        <property name="ref" value=""/>
-                    </property-collection>
                 </properties>
-                <description></description>
             </pattern>
         </lane>
     </flow>

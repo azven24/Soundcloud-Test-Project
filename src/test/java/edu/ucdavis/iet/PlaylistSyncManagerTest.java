@@ -31,7 +31,8 @@ public class PlaylistSyncManagerTest
 		// Create a list of textfiles of playlists to process
 		ArrayList<FileInputStream> xmlFiles = new ArrayList<FileInputStream>();
 		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml"));
-		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml")); // Empty playlist
+		//xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml")); // Empty playlist, test will fail on this
+		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/chillStuffPlaylist.xml"));
 		int fileNum = 0; // Keeps track of file # while iterating playlists
 		
 		for (int i = 0; i < xmlFiles.size(); i++) 
@@ -56,17 +57,26 @@ public class PlaylistSyncManagerTest
 		    assertTrue(trackList instanceof NodeList);
 		    assertTrue(urlList instanceof NodeList);
 		
-		    // Testing valid input: both must be non-empty
+		    // Testing valid input: both must be non-empty 
 		    assertNotNull(trackList);
 		    assertNotNull(urlList);
+		    
+		    System.out.println("# elements in trackList: " + trackList.getLength());
+		    System.out.println("# elements in urlList: " + urlList.getLength());
+		    for (int j = 0; j < trackList.getLength(); j++)
+		    	System.out.println("Track title: " + trackList.item(j).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(j).getFirstChild().getNodeValue() + "\n");
+		    
+		    assertTrue(trackList.getLength() > 0);
+		     
 		
 		    // Testing invalid input: if one of the URL's is invalid
 		
 	
-		    for (int j = 0; j < trackList.getLength(); j++)
-		    	System.out.println("Track title: " + trackList.item(j).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(j).getFirstChild().getNodeValue() + "\n");
+		    
 		
 		    System.out.println("END OF FILE #" + fileNum + "\n");
+		    xmlFiles.get(i).close();
+		    
 		}
 	}
 }
