@@ -35,13 +35,9 @@ public class PlaylistSyncManagerTest
 		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlistInfo.xml"));
 		xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/chillStuffPlaylist.xml"));
 		//xmlFiles.add(new FileInputStream("/Users/azven224/Documents/sc/esb/soundcloudapp/flows/playlist1.xml")); // Empty playlist, test will fail on this
-		int fileNum = 0; // Keeps track of file # while iterating playlists
-		
+				
 		for (int i = 0; i < xmlFiles.size(); i++) 
 		{
-			fileNum++;
-			System.out.print("START OF FILE #" + fileNum + "\n");
-			
 			// Create playlist file
 		    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder builder = builderFactory.newDocumentBuilder();
@@ -57,21 +53,13 @@ public class PlaylistSyncManagerTest
 		    psm.writetoJSONFile(trackList, urlList);
 					
 		    // Both input arguments must be NodeLists
-		    assertTrue(trackList instanceof NodeList);
-		    assertTrue(urlList instanceof NodeList);
-		
+		    assertTrue(trackList instanceof NodeList && urlList instanceof NodeList);
+		 		
 		    // Lists cannot be null and must be non-empty
 		    assertNotNull(trackList);
 		    assertNotNull(urlList);
-		    assertTrue(trackList.getLength() > 0);
-		    assertTrue(urlList.getLength() > 0);
-		    
-		    // Printing # of elements in lists and the tracks within each playlist. For debugging purposes
-		    System.out.println("# elements in trackList: " + trackList.getLength());
-		    System.out.println("# elements in urlList: " + urlList.getLength());
-		    for (int j = 0; j < trackList.getLength(); j++)
-		    	System.out.println("Track title: " + trackList.item(j).getFirstChild().getNodeValue() + "\n" + "Download URL: " + urlList.item(j).getFirstChild().getNodeValue() + "\n");
-		    		
+		    assertTrue(trackList.getLength() > 0 && urlList.getLength() > 0);
+		    		    	    		
 		    // Validating correct URL
 		    // Iterate list and create an object for every URL. If the URL is an invalid type, a MalformedURLException will be thrown
 		    for (int k = 0; k < urlList.getLength(); k++)
@@ -79,9 +67,6 @@ public class PlaylistSyncManagerTest
 		    	String trackURL = urlList.item(k).getFirstChild().getNodeValue();
 	    		URL url = new URL(trackURL);	    	
 		    }
-				    	
-		    System.out.println("END OF FILE #" + fileNum + "\n");
-		    xmlFiles.get(i).close();
 		} 
 	} 
 } 
